@@ -5,6 +5,7 @@
  */
 const BASE_PATH = "https://finnhub.io/api/v1";
 
+// stock symbol fetch 유틸 함수
 export const searchSymbols = async query => {
   const response = await fetch(
     `${BASE_PATH}/search?q=${query}&token=${process.env.REACT_APP_API_KEY}`
@@ -16,6 +17,7 @@ export const searchSymbols = async query => {
   return await response.json();
 };
 
+// stock info (company name) fetch 유틸 함수
 export const fetchStockDetails = async stockSymbol => {
   const response = await fetch(
     `${process.env.BASE_PATH}/stock/profile2?symbol=${stockSymbol}&token={process.env.REACT_APP_API_KEY}`
@@ -27,6 +29,7 @@ export const fetchStockDetails = async stockSymbol => {
   return await response.json();
 };
 
+// stock price fetch 유틸 함수
 export const fetchQuote = async stockSymbol => {
   const response = await fetch(
     `${process.env.BASE_PATH}/quote?symbol=${stockSymbol}&token={process.env.REACT_APP_API_KEY}`
@@ -38,6 +41,7 @@ export const fetchQuote = async stockSymbol => {
   return await response.json();
 };
 
+// stock candle-info fetch 유틸함수
 export const fetchHistoricalData = async (
   stockSymbol,
   resolution,

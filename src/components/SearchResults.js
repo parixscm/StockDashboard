@@ -5,10 +5,12 @@
  */
 
 import { useContext } from "react";
+import StockContext from "../context/StockContext";
 import ThemeContext from "../context/ThemeContext";
 
 function SearchResults({ results }) {
   const { isDarkMode } = useContext(ThemeContext);
+  const { setStockSymbol } = useContext(StockContext);
 
   return (
     <ul
@@ -20,6 +22,7 @@ function SearchResults({ results }) {
     >
       {results.map(result => (
         <li
+          onClick={() => setStockSymbol(result.symbol)}
           key={result.symbol}
           className={`m-2 p-4 text-sm flex items-center justify-between rounded-md cursor-pointer ${
             isDarkMode ? "hover:bg-indigo-600" : "hover:bg-indigo-200"
