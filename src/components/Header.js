@@ -1,3 +1,9 @@
+/**
+ * 파일 역할: 헤더 컴포넌트 (in 대시보드 컴포넌트)
+ * 작성자: Jason (parixscm)
+ * 최근 업데이트: 2023.03.22.
+ */
+
 import Search from "./Search";
 import ThemeIcon from "./ThemeIcon";
 

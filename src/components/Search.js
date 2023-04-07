@@ -1,3 +1,9 @@
+/**
+ * 파일 역할: 서치바 컴포넌트 (in 헤더 컴포넌트)
+ * 작성자: Jason (parixscm)
+ * 최근 업데이트: 2023.03.22.
+ */
+
 import { useState } from "react";
 import { mockSearchResult } from "../constants/mock";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
@@ -12,6 +18,7 @@ function Search() {
     setBestMatches([]);
   };
 
+  // TODO: useCallback 아마?
   const updateBestMatches = () => {
     setBestMatches(mockSearchResult.result);
   };
