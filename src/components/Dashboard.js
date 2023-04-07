@@ -4,16 +4,66 @@
  * 최근 업데이트: 2023.04.07.
  */
 
-import { useContext } from "react";
-import { mockCompanyDetails } from "../constants/mock";
+import { useContext, useState, useEffect, useCallback } from "react";
+import { fetchQuote, fetchStockDetails } from "../api/fetchStock";
 import Header from "./Header";
 import Overview from "./Overview";
 import Details from "./Details";
 import Chart from "./Chart";
 import ThemeContext from "../context/ThemeContext";
+import StockContext from "../context/StockContext";
 
 function Dashboard() {
+  const { stockSymbol } = useContext(StockContext);
   const { isDarkMode } = useContext(ThemeContext);
+  const [stockDetails, setStockDetails] = useState({});
+  const [quote, setQuote] = useState({});
+
+  const updateStockDetails = useCallback(async () => {
+    try {
+      const result = await fetchStockDetails(stockSymbol);
+      setStockDetails(result);
+    } catch (error) {
+      setStockDetails({});
+      console.log(error);
+    }
+  }, [stockSymbol]);
+
+  const updateStockOverview = useCallback(async () => {
+    try {
+      const result = await fetchQuote(stockSymbol);
+      setQuote(result);
+    } catch (error) {
+      setQuote({});
+      console.log(error);
+    }
+  }, [stockSymbol]);
+
+  useEffect(() => {
+    // const updateStockDetails = async () => {
+    //   try {
+    // const result = await fetchStockDetails(stockSymbol);
+    // setStockDetails(result);
+    //   } catch (error) {
+    // setStockDetails({});
+    // console.log(error);
+    //   }
+    // };
+
+    // const updateStockOverview = async () => {
+    // try {
+    //   const result = await fetchQuote(stockSymbol);
+    //   setQuote(result);
+    // } catch (error) {
+    //   setQuote({});
+    //   console.log(error);
+    // }
+    // };
+
+    updateStockDetails();
+    updateStockOverview();
+    // }, [stockSymbol]);
+  }, [updateStockDetails, updateStockOverview]);
 
   return (
     <div
@@ -22,22 +72,22 @@ function Dashboard() {
       }`}
     >
       <div className="flex justify-start items-center col-span-1 row-span-1 md:col-span-2 xl:col-span-3">
-        <Header name={mockCompanyDetails.name} />
+        <Header name={stockDetails.name} />
       </div>
       <div className="row-span-4 md:col-span-2 text-sm">
         <Chart />
       </div>
       <div>
         <Overview
-          symbol={mockCompanyDetails.ticker}
-          price={300}
-          change={30}
-          changePercent={10.0}
-          currency={"USD"}
+          symbol={stockSymbol}
+          price={quote.pc}
+          change={quote.d}
+          changePercent={quote.dp}
+          currency={stockDetails.currency}
         />
       </div>
       <div className="row-span-2 xl:row-span-3">
-        <Details details={mockCompanyDetails} />
+        <Details details={stockDetails} />
       </div>
     </div>
   );

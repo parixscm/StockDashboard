@@ -10,11 +10,12 @@ import ThemeContext from "./context/ThemeContext";
 import StockContext from "./context/StockContext";
 
 function App() {
-  const [stockSymbol, setStockSymbol] = useState("FB");
+  const [stockSymbol, setStockSymbol] = useState("TSLA");
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
     <div className="text-2xl font-quicksand">
+      {/* isDarkMode, stockSymbol -> 전역 상태 관리 */}
       <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
         <StockContext.Provider value={{ stockSymbol, setStockSymbol }}>
           <Dashboard />

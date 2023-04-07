@@ -20,7 +20,7 @@ export const searchSymbols = async query => {
 // stock info (company name) fetch 유틸 함수
 export const fetchStockDetails = async stockSymbol => {
   const response = await fetch(
-    `${process.env.BASE_PATH}/stock/profile2?symbol=${stockSymbol}&token={process.env.REACT_APP_API_KEY}`
+    `${BASE_PATH}/stock/profile2?symbol=${stockSymbol}&token=${process.env.REACT_APP_API_KEY}`
   );
   if (!response.ok) {
     const message = `Unexpected error: ${response.status}`;
@@ -32,7 +32,7 @@ export const fetchStockDetails = async stockSymbol => {
 // stock price fetch 유틸 함수
 export const fetchQuote = async stockSymbol => {
   const response = await fetch(
-    `${process.env.BASE_PATH}/quote?symbol=${stockSymbol}&token={process.env.REACT_APP_API_KEY}`
+    `${BASE_PATH}/quote?symbol=${stockSymbol}&token=${process.env.REACT_APP_API_KEY}`
   );
   if (!response.ok) {
     const message = `Unexpected error: ${response.status}`;
@@ -49,7 +49,7 @@ export const fetchHistoricalData = async (
   to
 ) => {
   const response = await fetch(
-    `${process.env.BASE_PATH}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token={process.env.REACT_APP_API_KEY}`
+    `${BASE_PATH}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_API_KEY}`
   );
   if (!response.ok) {
     const message = `Unexpected error: ${response.status}`;
