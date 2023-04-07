@@ -13,10 +13,10 @@ import {
   convertDateToUnixTimestamp,
   createDate,
 } from "../utils/date";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { fetchHistoricalData } from "../api/fetchStock";
 
-// 차트 관련 컴포넌트
+// 차트 관련 컴포넌트 불러오기
 import {
   ResponsiveContainer,
   AreaChart,
@@ -33,7 +33,7 @@ function Chart() {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("1W");
 
-  // Convert Rechart data format
+  // 차트에서 사용하기 위한 데이터 포맷으로 변환(to UnixTimestamp)
   const formatData = data => {
     return data.c.map((item, idx) => ({
       value: item.toFixed(2),
@@ -41,37 +41,38 @@ function Chart() {
     }));
   };
 
+  // 기간 별 startDate, endDate 계산
+  const getDateRange = useCallback(() => {
+    const { days, weeks, months, years } = chartConfig[filter];
+    const endDate = new Date();
+    const startDate = createDate(endDate, -days, -weeks, -months, -years);
+
+    const endDateUnix = convertDateToUnixTimestamp(endDate);
+    const startDateUnix = convertDateToUnixTimestamp(startDate);
+
+    return { startDateUnix, endDateUnix };
+  }, [filter]);
+
+  const updateChartData = useCallback(async () => {
+    try {
+      const { startDateUnix, endDateUnix } = getDateRange();
+      const resolution = chartConfig[filter].resolution;
+      const result = await fetchHistoricalData(
+        stockSymbol,
+        resolution,
+        startDateUnix,
+        endDateUnix
+      );
+      setData(formatData(result));
+    } catch (error) {
+      setData([]);
+      console.log(error);
+    }
+  }, [getDateRange, filter, stockSymbol]);
+
   useEffect(() => {
-    const getDateRange = () => {
-      const { days, weeks, months, years } = chartConfig[filter];
-      const endDate = new Date();
-      const startDate = createDate(endDate, -days, -weeks, -months, -years);
-
-      const endDateUnix = convertDateToUnixTimestamp(endDate);
-      const startDateUnix = convertDateToUnixTimestamp(startDate);
-
-      return { startDateUnix, endDateUnix };
-    };
-
-    const updateChartData = async () => {
-      try {
-        const { startDateUnix, endDateUnix } = getDateRange();
-        const resolution = chartConfig[filter].resolution;
-        const result = await fetchHistoricalData(
-          stockSymbol,
-          resolution,
-          startDateUnix,
-          endDateUnix
-        );
-        setData(formatData(result));
-      } catch (error) {
-        setData([]);
-        console.log(error);
-      }
-    };
-
     updateChartData();
-  }, [stockSymbol, filter]);
+  }, [stockSymbol, filter, updateChartData]);
 
   return (
     <Card>

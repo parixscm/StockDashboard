@@ -40,29 +40,8 @@ function Dashboard() {
   }, [stockSymbol]);
 
   useEffect(() => {
-    // const updateStockDetails = async () => {
-    //   try {
-    // const result = await fetchStockDetails(stockSymbol);
-    // setStockDetails(result);
-    //   } catch (error) {
-    // setStockDetails({});
-    // console.log(error);
-    //   }
-    // };
-
-    // const updateStockOverview = async () => {
-    // try {
-    //   const result = await fetchQuote(stockSymbol);
-    //   setQuote(result);
-    // } catch (error) {
-    //   setQuote({});
-    //   console.log(error);
-    // }
-    // };
-
     updateStockDetails();
     updateStockOverview();
-    // }, [stockSymbol]);
   }, [updateStockDetails, updateStockOverview]);
 
   return (
