@@ -5,6 +5,7 @@
  */
 
 import Card from "./Card";
+import ChartFilter from "./ChartFilter";
 import { useState } from "react";
 import {
   ResponsiveContainer,
@@ -14,6 +15,7 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
+import { chartConfig } from "../constants/config";
 import { mockHistoricalData } from "../constants/mock";
 import { convertUnixTimestampToDate } from "../utils/date";
 
@@ -31,6 +33,17 @@ function Chart() {
 
   return (
     <Card>
+      <ul className="flex absolute top-2 right-2 z-40">
+        {Object.keys(chartConfig).map(item => (
+          <li key={item}>
+            <ChartFilter
+              text={item}
+              isActive={filter === item}
+              clickHandler={() => setFilter(item)}
+            />
+          </li>
+        ))}
+      </ul>
       <ResponsiveContainer>
         <AreaChart data={formatData(data)}>
           <defs>
