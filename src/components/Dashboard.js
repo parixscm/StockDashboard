@@ -6,9 +6,9 @@
 
 import { mockCompanyDetails } from "../constants/mock";
 import Header from "./Header";
-import Card from "./Card";
 import Overview from "./Overview";
 import Details from "./Details";
+import Chart from "./Chart";
 
 function Dashboard() {
   return (
@@ -16,8 +16,8 @@ function Dashboard() {
       <div className="flex justify-start items-center col-span-1 row-span-1 md:col-span-2 xl:col-span-3">
         <Header name={mockCompanyDetails.name} />
       </div>
-      <div className="row-span-4 md:col-span-2">
-        <Card>Chart</Card>
+      <div className="row-span-4 md:col-span-2 text-sm">
+        <Chart />
       </div>
       <div>
         <Overview
