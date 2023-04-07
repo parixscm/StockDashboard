@@ -3,10 +3,11 @@
  * 작성자: Jason (parixscm)
  * 최근 업데이트: 2023.03.22.
  */
+const BASE_PATH = "https://finnhub.io/api/v1";
 
 export const searchSymbols = async query => {
   const response = await fetch(
-    `${process.env.BASE_PATH}/search?q=${query}&token=${process.env.REACT_APP_API_KEY}`
+    `${BASE_PATH}/search?q=${query}&token=${process.env.REACT_APP_API_KEY}`
   );
   if (!response.ok) {
     const message = `Unexpected error: ${response.status}`;

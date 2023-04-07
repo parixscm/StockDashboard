@@ -7,22 +7,31 @@
 import { useContext, useState } from "react";
 import { mockSearchResult } from "../constants/mock";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { searchSymbols } from "../api/fetchStock";
 import SearchResults from "./SearchResults";
 import ThemeContext from "../context/ThemeContext";
 
 function Search() {
   const { isDarkMode } = useContext(ThemeContext);
   const [input, setInput] = useState("");
-  const [bestMatches, setBestMatches] = useState(mockSearchResult.result);
+  const [bestMatches, setBestMatches] = useState([]);
 
   const clear = () => {
     setInput("");
     setBestMatches([]);
   };
 
-  // TODO: useCallback 아마?
-  const updateBestMatches = () => {
-    setBestMatches(mockSearchResult.result);
+  const updateBestMatches = async () => {
+    try {
+      if (input) {
+        const searchResults = await searchSymbols(input);
+        const result = searchResults.result;
+        setBestMatches(result);
+      }
+    } catch (error) {
+      setBestMatches([]);
+      console.error(error);
+    }
   };
 
   return (

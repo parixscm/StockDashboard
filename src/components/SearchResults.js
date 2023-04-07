@@ -26,7 +26,7 @@ function SearchResults({ results }) {
           } md:text-base`}
         >
           <span>{result.symbol}</span>
-          <span>{result.description}</span>
+          <span className="text-xs md:text-sm">{result.description}</span>
         </li>
       ))}
     </ul>
