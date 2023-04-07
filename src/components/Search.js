@@ -4,12 +4,14 @@
  * 최근 업데이트: 2023.03.22.
  */
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { mockSearchResult } from "../constants/mock";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import SearchResults from "./SearchResults";
+import ThemeContext from "../context/ThemeContext";
 
 function Search() {
+  const { isDarkMode } = useContext(ThemeContext);
   const [input, setInput] = useState("");
   const [bestMatches, setBestMatches] = useState(mockSearchResult.result);
 
@@ -24,12 +26,20 @@ function Search() {
   };
 
   return (
-    <div className="w-96 my-4 flex items-center relative bg-white border-2 border-neutral-200 rounded-md z-50">
+    <div
+      className={`w-96 my-4 flex items-center relative  border-2 rounded-md z-50 ${
+        isDarkMode
+          ? "bg-gray-900 border-gray-800"
+          : "bg-white border-neutral-200"
+      }`}
+    >
       <input
         type="text"
         value={input}
         placeholder="Search stock..."
-        className="w-full px-4 py-2 focus:outline-none rounded-md text-base"
+        className={`w-full px-4 py-2 focus:outline-none rounded-md text-base ${
+          isDarkMode ? "bg-gray-900" : null
+        }`}
         onChange={e => setInput(e.target.value)}
         onKeyDown={e => {
           if (e.key === "Enter") {

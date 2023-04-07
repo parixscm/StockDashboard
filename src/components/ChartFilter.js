@@ -1,3 +1,9 @@
+/**
+ * 파일 역할: 차트 필터(day, week, month, year) 컴포넌트 (in 차트 컴포넌트)
+ * 작성자: Jason (parixscm)
+ * 최근 업데이트: 2023.03.22.
+ */
+
 function ChartFilter({ text, isActive, clickHandler }) {
   return (
     <button

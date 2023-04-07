@@ -6,7 +6,7 @@
 
 import Card from "./Card";
 import ChartFilter from "./ChartFilter";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -18,8 +18,10 @@ import {
 import { chartConfig } from "../constants/config";
 import { mockHistoricalData } from "../constants/mock";
 import { convertUnixTimestampToDate } from "../utils/date";
+import ThemeContext from "../context/ThemeContext";
 
 function Chart() {
+  const { isDarkMode } = useContext(ThemeContext);
   const [data, setData] = useState(mockHistoricalData);
   const [filter, setFilter] = useState("1W");
 
@@ -50,10 +52,14 @@ function Chart() {
             <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
               <stop
                 offset="5%"
-                stopColor="rgb(199 210 514)"
+                stopColor={isDarkMode ? "#312e81" : "rgb(199 210 514)"}
                 stopOpacity="rgb(199 210 514)"
               />
-              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+              <stop
+                offset="95%"
+                stopColor={isDarkMode ? "#312e81" : "rgb(199 210 514)"}
+                stopOpacity={0}
+              />
             </linearGradient>
           </defs>
           <Area
@@ -64,7 +70,10 @@ function Chart() {
             fillOpacity={1}
             strokeWidth={0.5}
           />
-          <Tooltip />
+          <Tooltip
+            contentStyle={isDarkMode ? { backgroundColor: "#111827" } : null}
+            itemStyle={isDarkMode ? { color: "#818cf8" } : null}
+          />
           <XAxis dataKey="date" />
           <YAxis domain={["dataMin", "dataMax"]} />
         </AreaChart>

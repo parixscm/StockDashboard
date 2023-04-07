@@ -4,9 +4,13 @@
  * 최근 업데이트: 2023.03.22.
  */
 
+import { useContext } from "react";
+import ThemeContext from "../context/ThemeContext";
 import Card from "./Card";
 
 function Details({ details }) {
+  const { isDarkMode } = useContext(ThemeContext);
+
   const detailsList = {
     name: "Name",
     country: "Country",
@@ -23,7 +27,11 @@ function Details({ details }) {
 
   return (
     <Card>
-      <ul className="w-full h-full -mt-5 flex flex-col justify-between divide-y-1 md:-mt-2 xl:mt-0">
+      <ul
+        className={`w-full h-full -mt-5 flex flex-col justify-between divide-y-1 md:-mt-2 xl:mt-0 ${
+          isDarkMode ? "divide-gray-800" : null
+        }`}
+      >
         {Object.keys(detailsList).map(item => (
           <li
             key={item}

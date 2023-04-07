@@ -5,11 +5,30 @@
  */
 
 import { MoonIcon } from "@heroicons/react/24/solid";
+import { useContext } from "react";
+import ThemeContext from "../context/ThemeContext";
 
 function ThemeIcon() {
+  const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <button className="p-2 absolute right-8 rounded-lg border-1 border-neutral-400 shadow-md xl:right-32">
-      <MoonIcon className="w-5 h-5 cursor-pointer stroke-1 fill-none stroke-neutral-400" />
+    <button
+      className={`p-2 absolute right-8 rounded-lg border-1 border-neutral-400 shadow-md xl:right-32 ${
+        isDarkMode ? "shadow-gray-800" : null
+      }`}
+      onClick={toggleDarkMode}
+    >
+      <MoonIcon
+        className={`w-5 h-5 cursor-pointer stroke-1 fill-none stroke-neutral-400 ${
+          isDarkMode
+            ? "fill-yellow-400 stroke-yellow-400"
+            : "fill-none stroke-neutral-400"
+        }`}
+      />
     </button>
   );
 }
