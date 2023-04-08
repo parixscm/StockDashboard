@@ -11,6 +11,7 @@ import { searchSymbols } from "../api/fetchStock";
 import SearchResults from "./SearchResults";
 import ThemeContext from "../context/ThemeContext";
 import StockContext from "../context/StockContext";
+import MatchLine from "./MatchLine";
 
 function Search() {
   const { setStockSymbol } = useContext(StockContext);
@@ -81,19 +82,7 @@ function Search() {
             </div>
           ) : (
             bestMatches.map(match => (
-              <li
-                onClick={() => {
-                  setStockSymbol(match.symbol);
-                  setInput("");
-                }}
-                key={match.symbol}
-                className={`m-2 p-4 text-sm flex items-center justify-between rounded-md cursor-pointer ${
-                  isDarkMode ? "hover:bg-indigo-600" : "hover:bg-indigo-200"
-                } transition duration-300 md:text-base`}
-              >
-                <span>{match.symbol}</span>
-                <span className="text-xs md:text-sm">{match.description}</span>
-              </li>
+              <MatchLine match={match} setInput={setInput} />
             ))
           )}
         </ul>
