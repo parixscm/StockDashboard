@@ -26,7 +26,7 @@ function SearchResults({ results }) {
           key={result.symbol}
           className={`m-2 p-4 text-sm flex items-center justify-between rounded-md cursor-pointer ${
             isDarkMode ? "hover:bg-indigo-600" : "hover:bg-indigo-200"
-          } md:text-base`}
+          } transition duration-300 md:text-base`}
         >
           <span>{result.symbol}</span>
           <span className="text-xs md:text-sm">{result.description}</span>

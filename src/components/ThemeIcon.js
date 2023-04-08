@@ -19,7 +19,7 @@ function ThemeIcon() {
     <button
       className={`p-2 absolute right-8 rounded-lg border-1 border-neutral-400 shadow-md xl:right-32 ${
         isDarkMode ? "shadow-gray-800" : null
-      }`}
+      } transition duration-300 hover:scale-110`}
       onClick={toggleDarkMode}
     >
       <MoonIcon

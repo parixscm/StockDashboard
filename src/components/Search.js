@@ -63,7 +63,7 @@ function Search() {
       )}
       <button
         onClick={updateBestMatches}
-        className="w-8 h-8 m-1 p-2 flex items-center justify-center bg-indigo-600 rounded"
+        className="w-8 h-8 m-1 p-2 flex items-center justify-center bg-indigo-600 rounded transition duration-200 hover:ring-2 ring-indigo-400"
       >
         <MagnifyingGlassIcon className="w-4 h-4 fill-gray-100" />
       </button>

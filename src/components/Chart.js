@@ -74,6 +74,8 @@ function Chart() {
     updateChartData();
   }, [stockSymbol, filter, updateChartData]);
 
+  console.log(data);
+
   return (
     <Card>
       <ul className="flex absolute top-2 right-2 z-40">
