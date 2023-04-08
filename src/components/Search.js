@@ -78,7 +78,12 @@ function Search() {
         >
           {isLoading ? (
             <div className="w-full h-full flex justify-center items-center">
-              <ClipLoader size={23} width={23} height={23} className="" />
+              <ClipLoader
+                size={23}
+                width={23}
+                height={23}
+                color={isDarkMode ? "white" : "indigo"}
+              />
             </div>
           ) : (
             bestMatches.map((match, idx) => (
