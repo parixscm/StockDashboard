@@ -11,7 +11,7 @@ export const convertDateToUnixTimestamp = date => {
 
 export const convertUnixTimestampToDate = unixTimestamp => {
   const milliseconds = unixTimestamp * 1000;
-  return new Date(milliseconds).toLocaleDateString();
+  return new Date(milliseconds).toLocaleDateString("ko-KR");
 };
 
 // Get start date or end date
