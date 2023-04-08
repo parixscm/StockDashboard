@@ -8,13 +8,10 @@ import { useContext, useEffect, useState } from "react";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { ClipLoader } from "react-spinners";
 import { searchSymbols } from "../api/fetchStock";
-import SearchResults from "./SearchResults";
 import ThemeContext from "../context/ThemeContext";
-import StockContext from "../context/StockContext";
 import MatchLine from "./MatchLine";
 
 function Search() {
-  const { setStockSymbol } = useContext(StockContext);
   const { isDarkMode } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState("");
@@ -31,7 +28,10 @@ function Search() {
         if (input) {
           setIsLoading(true);
           const searchResults = await searchSymbols(input);
-          setBestMatches(searchResults.result);
+          const results = searchResults.result.filter(
+            item => !item.displaySymbol.includes(".")
+          );
+          setBestMatches(results);
           setIsLoading(false);
         }
       } catch (error) {
@@ -81,8 +81,8 @@ function Search() {
               <ClipLoader size={23} width={23} height={23} className="" />
             </div>
           ) : (
-            bestMatches.map(match => (
-              <MatchLine match={match} setInput={setInput} />
+            bestMatches.map((match, idx) => (
+              <MatchLine key={idx} match={match} setInput={setInput} />
             ))
           )}
         </ul>

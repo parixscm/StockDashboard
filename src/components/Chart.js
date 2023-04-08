@@ -36,7 +36,6 @@ function Chart() {
   // 차트에서 사용하기 위한 데이터 포맷으로 변환(to UnixTimestamp)
   const formatData = data => {
     return data.c.map((item, idx) => {
-      console.log(item.toFixed(2));
       return {
         value: +item.toFixed(2),
         date: convertUnixTimestampToDate(data.t[idx]),
