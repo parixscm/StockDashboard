@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Jason's 미국 주식 대시보드 📈💰
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+👉🏻 https://jason-stock.vercel.app/
 
-## Available Scripts
+<br/>
 
-In the project directory, you can run:
+## **🎯 개발 목표**
 
-### `npm start`
+- 시계열 자료를 시각적으로 표현하고자 했습니다.
+  - 사용한 라이브러리: 차트 구현을 위한 **'Rechart'**
+- Search Logic에 대해 고민하고 이를 구현하고자 했습니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<br/>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## **🕹 사용한 기술**
 
-### `npm test`
+<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
+<img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
+<img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br />
 
-### `npm run build`
+## **👨🏻‍🏫 Advanced Feature**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Search Logic
+  - 첫 번째 구현) 검색어를 입력한 뒤 버튼을 클릭하는 이벤트 혹은 엔터키를 누르는 이벤트가 발생했을 때만 검색을 하는 식으로 구현했습니다. 하지만 이 구현 방식에는 검색 과정 중 **대시보드와 유저 사이에 상호작용이 활발하게 이뤄지지 않는다는 문제점**이 보였습니다.
+  - 두 번째 구현) 문제를 해결하기 위해 검색어를 입력할 때마다 검색이 발생하는 식으로 코드를 수정했습니다. 하지만 이 구현 방식에도 **서버로 요청을 자주 보내는 문제점**이 보였습니다. 이를 해결하기 위해 **검색어가 특정 길이 이상인 경우에만 검색이 발생하는 방식**으로 코드를 재수정했습니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## **💻 코드**
 
-### `npm run eject`
+<br/>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **두 번째 방식으로 구현한 Search Logic 코드**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br/>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+> searchSymbol(): input 값을 포함하는 결과 데이터를 fetch하는 유틸리티 함수
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+const [isLoading, setIsLoading] = useState(false);
+const [input, setInput] = useState("");
+const [bestMatches, setBestMatches] = useState([]);
 
-## Learn More
+useEffect(() => {
+  const updateBestMatches = async () => {
+    try {
+      if (input) {
+        setIsLoading(true);
+        const searchResults = await searchSymbols(input);
+        const results = searchResults.result.filter(
+          item => !item.displaySymbol.includes(".")
+        );
+        setBestMatches(results);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setBestMatches([]);
+      console.error(error);
+    }
+  };
+  if (input.length <= 1) setBestMatches([]);
+  else updateBestMatches();
+}, [input]);
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br />
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## **🍀 개선사항**
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. 현재는 입력한 stock ticker로만 검색이 발생한다. 회사명을 입력해도 차트와 종목 정보를 보여주는 식으로 코드를 수정할 계획이다.
+2. axios 라이브러리를 설치하고 request cancellation 기능을 사용해 볼 계획이다. 검색 결과를 불러오는 도중에 새로운 검색어를 입력하게 되면 기존에 불러오는 검색 결과는 필요 없어지기 때문이다. (검색어를 입력하고 0.3초 뒤에 검색이 발생하는 방식도 고려해보자)
