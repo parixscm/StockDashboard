@@ -9,14 +9,14 @@
 - 시계열 자료를 시각적으로 표현하고자 했습니다.
   - 차트 구현을 위한 **Rechart** 라이브러리를 사용했습니다.
 - Search Logic에 대해 고민하고 이를 구현하고자 했습니다.
-  - Finnhub.io API를
+  - Finnhub.io API를 이용했습니다.
     <br/>
 
 ## **🕹 사용한 기술**
 
-<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
-<img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
-<img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white">
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
 <br />
 
